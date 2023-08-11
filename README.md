@@ -73,7 +73,8 @@ cp * ~/.config/eww
 
 You're done! Yippee!!
 
-## Legal
-
-Mac and macOS are trademarks of Apple Inc., registered in the U.S. and
-other countries and regions. I am not affiliated with Apple Inc.
+<sub>
+  Mac and macOS are trademarks of Apple Inc., registered in the U.S. and
+  other countries and regions. I am not affiliated with Apple Inc and this
+  repository does not contain any assets lifted from macOS.
+</sub>
