@@ -1,0 +1,89 @@
+;; Custom Scripts
+
+(deflisten windows "./scripts/bin/hyprland-activewindow _")
+(defpoll minimized_windows :interval "1s" "./scripts/bin/hyprland-minimize list")
+(defpoll taskbar_entries :interval "1s" :initial "[]" "./scripts/bin/hyprland-tasks")
+
+;; System info (CLI)
+
+(defpoll wifi_name :interval "1s" "nmcli -t -f name connection show --active | head -1")
+(defpoll wifi_strength :interval "1s" "nmcli -f IN-USE,SIGNAL device wifi | awk '/^\*/{if (NR!=1) {print $2}}'")
+(defpoll hour :interval "1s" "date '+%a %b %_d %_H:%M'")
+
+(defpoll brightness :interval "1s" "brightnessctl g")
+(defpoll max_brightness :interval "1s" "brightnessctl m")
+
+(defpoll volume :interval "1s" "pamixer --get-volume")
+
+;; State
+
+(defvar control_center_open false)
+(defvar dock_hovered false)
+(defvar dock_pseudo_hovered false)
+
+;; Imports
+
+(include "./control_center.yuck")
+(include "./dock.yuck")
+
+(defwindow panel
+    :monitor 0
+    :exclusive true
+    :geometry (geometry :width "100%" :anchor "top center")
+    :stacking "fg"
+    :reserve (struts :distance "40px" :side "top")
+    :windowtype "dock"
+    :wm-ignore false
+    :class "dark"
+    (box
+        :space-evenly false
+        :class "container"
+        (box :space-evenly false :hexpand true :class "section-container"
+            (button :class "section selectable"
+                (image :image-width 20 :path "/usr/share/icons/WhiteSur/status/symbolic/start-here-symbolic.svg")
+            )
+            (box :class "section selectable activetitle"
+                "${windows[0].title}"
+            )
+        )
+        (box :space-evenly false :class "section-container"
+            (tray)
+            (box
+                :class "section"
+                :space-evenly false
+                (button
+                    :class "selectable"
+                    hour
+                )
+            )
+        )
+    )
+)
+
+(defwidget tray[]
+    (box
+        :class "section"
+        (button
+            :class "selectable"
+            :onclick "eww update control_center_open='${!control_center_open}'"
+            (box :spacing 21 :space-evenly false
+                (image
+                    :tooltip "${volume}%"
+                    :path "/usr/share/icons/WhiteSur/status/symbolic/audio-volume-${volume > 100 ? "overamplified" : volume > 66 ? "high" : volume > 33 ? "medium" : volume > 0 ? "low" : "muted"}-symbolic.svg"
+                )
+                (image
+                    :tooltip "${wifi_strength}%"
+                    :path "/usr/share/icons/WhiteSur/status/symbolic/network-wireless-signal-${wifi_strength == "" ? "none" : wifi_strength > 66 ? "excellent" : wifi_strength > 33 ? "ok" : "weak"}-symbolic.svg")
+                (image
+                    :path "/usr/share/icons/WhiteSur/status/symbolic/bluetooth-active-symbolic.svg"
+                )
+                (box :space-evenly false :spacing 8
+                    (image
+                        :path "/usr/share/icons/WhiteSur/status/symbolic/battery-level-${round(EWW_BATTERY["BAT0"]["capacity"] / 10, 0) * 10}-${EWW_BATTERY["BAT0"]["status"] == "Charging" ? "charging-" : ""}symbolic.svg"
+                    )
+                    "${EWW_BATTERY["BAT0"]["capacity"]}%"
+                )
+            )
+        )
+    )
+)

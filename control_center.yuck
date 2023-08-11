@@ -1,0 +1,72 @@
+(defwindow control_center
+    :monitor 0
+    :exclusive false
+    :geometry (geometry :width "460px" :y "-16px" :x "32px" :anchor "top right")
+    :stacking "fg"
+    :wm-ignore false
+    :class "dark"
+    (revealer :reveal control_center_open :transition "none"
+        (eventbox :onhoverlost "eww update control_center_open='false'"
+        (box :class "container" :space-evenly false :spacing 16 :orientation "vertical"
+            (box :spacing 16
+                (quick_settings)
+                (box :class "control")
+            )
+            (box
+                :class "sliders control"
+                :orientation "vertical"
+                :space-evenly false
+                :spacing 8
+                (label :xalign 0 :text "Display")
+                (scale :class "scale" :value brightness :min 0 :max 852 :onchange "brightnessctl s {}")
+            )
+            (box
+                :class "sliders control"
+                :orientation "vertical"
+                :space-evenly false
+                :spacing 8
+                (label :xalign 0 :text "Sound")
+                (scale :class "scale" :value volume :min 0 :max 100 :onchange "pamixer --set-volume {} && eww update volume='{}'")
+            )
+        )
+        )
+    )
+)
+
+(defwidget quick_settings[]
+    (box :class "control" :orientation "vertical" :spacing 16
+        (button
+            (box :space-evenly false :spacing 12
+                (box :class "icon" :valign "center"
+                    (image :image-width 21 :path "/usr/share/icons/WhiteSur-dark/status/symbolic/network-wireless-signal-excellent-symbolic.svg")
+                )
+                (box :orientation "vertical"
+                    (label :xalign 0 :text "Wi-Fi")
+                    (label :xalign 0 :class "muted" :text "${strlength(wifi_name) > 13 ? captures(wifi_name, '.{0,12}')[0][0] + "..." : wifi_name}")
+                )
+            )
+        )
+        (button
+            (box :space-evenly false :spacing 12
+                (box :class "icon" :valign "center"
+                    (image :image-width 21 :path "/usr/share/icons/WhiteSur-dark/status/symbolic/bluetooth-active-symbolic.svg")
+                )
+                (box :orientation "vertical"
+                    (label :xalign 0 :text "Bluetooth")
+                    (label :xalign 0 :class "muted" :text "On")
+                )
+            )
+        )
+        (button
+            (box :space-evenly false :spacing 12
+                (box :class "icon" :valign "center"
+                    (image :image-width 21 :path "/usr/share/icons/WhiteSur-dark/devices/symbolic/network-server-symbolic.svg")
+                )
+                (box :orientation "vertical"
+                    (label :xalign 0 :text "Connect")
+                    (label :xalign 0 :class "muted" :text "Pixel 4a")
+                )
+            )
+        )
+    )
+)

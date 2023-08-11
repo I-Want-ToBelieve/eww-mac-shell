@@ -1,0 +1,171 @@
+// $color-fg: #fff;
+// $color-fg-muted: #eee;
+// $color-fg-silent: #ddd;
+// $color-bg: rgba(#000, 0.5);
+// $color-bg-overlay: rgba(#fff, 0.1);
+// $color-bg-overlay-intense: rgba(#fff, 0.15);
+// $color-bg-opaque: rgba(#fff, 1);
+// $color-bg-slider: rgba(#fff, 0.2);
+// $color-accent: rgb(10, 132, 255);
+
+$color-fg: #000;
+$color-fg-muted: #333;
+$color-fg-silent: #666;
+$color-bg: rgba(#fff, 0.5);
+$color-bg-overlay: rgba(#fff, 0.2);
+$color-bg-overlay-intense: rgba(#fff, 0.3);
+$color-bg-opaque: rgba(#fff, 1);
+$color-bg-slider: rgba(#000, 0.15);
+$color-accent: rgb(0, 122, 255);
+
+.panel {
+    $outer-padding: 0px;
+    $inter-item-spacing: 0px;
+    $rounding: 4px;
+
+    background-color: $color-bg;
+    color: $color-fg;
+    font-family: 'Inter';
+    .container {
+        padding: 0px $outer-padding;
+    }
+    .selectable {
+        background: transparent;
+        border: none;
+        box-shadow: none;
+        border-radius: $rounding;
+        margin: 0px;
+        transition: none;
+        text-shadow: none;
+        color: $color-fg-muted;
+        &.bold {
+            font-weight: bold;
+        }
+        &:hover {
+            background: $color-bg-overlay;
+            color: $color-fg;
+        }
+        &:active {
+            background: $color-bg-overlay-intense;
+        }
+    }
+    .section-container .section {
+        margin: 0 $inter-item-spacing;
+    }
+    .section {
+        border-radius: $rounding;
+        margin: $outer-padding 0;
+    }
+    .activetitle, .selectable {
+        padding: 4px 16px;
+    }
+    .taskbar {
+        .entry {
+            padding: $outer-padding;
+            background: transparent;
+            border: none;
+            box-shadow: none;
+        }
+    }
+}
+.control_center {
+    $slider-height: 26px;
+    $rounding: 16px;
+
+    background: transparent;
+    color: $color-fg;
+    font-weight: 500;
+    font-size: 16px;
+    .muted {
+        color: $color-fg-silent;
+        font-weight: 400;
+        font-size: 12px;
+    }
+    .control {
+        padding: 16px;
+        background: $color-bg-overlay;
+        border-radius: $rounding;
+        box-shadow: 0px 4px 8px 0px rgba(#000, .2);
+        button {
+            color: $color-fg;
+            font-weight: 500;
+            background: transparent;
+            border: 0;
+            padding: 0;
+            .icon {
+                border-radius: 100%;
+                padding: 6px;
+                background: $color-accent;
+            }
+        }
+    }
+    .sliders {
+        padding-top: 12px;
+        .scale {           
+            trough {
+                background: $color-bg-slider;
+                border: 1px solid $color-bg-slider;                                                                                              
+                min-height: $slider-height;
+                border-radius: $slider-height;
+                margin: 0 -4px;
+            }
+            highlight {
+                border-radius: $slider-height;
+                background: $color-bg-opaque;
+            }
+            slider {                                                           
+                min-width: $slider-height;                                                                               
+                min-height: $slider-height;
+                box-shadow: 0px 0px 1px 1px rgba(#000, .1), 0px 0px 4px 0px rgba(#000, .2);
+            }
+        }
+    }
+    .container {
+        background: $color-bg;
+        border-radius: $rounding + 8;
+        box-shadow:
+            0px 0px 16px 0px rgba(#000, .2),
+            0px 0px 2px 1px rgba(#000, .2);
+        margin: 32px;
+        padding: 16px;
+    }
+}
+.dock {
+    background-color: transparent;
+    .main {
+        margin: 24px 24px 8px 24px;
+        background-color: rgba(200,200,200, 0.5);
+        border-radius: 24px;
+        box-shadow:
+            0px 0px 1px 1px rgba(#fff, 0.2) inset,
+            0px 0px 1px 1px rgba(#000, 0.1),
+            0px 0px 12px 4px rgba(#000,0.2);
+        .entry {
+            background: transparent;
+            border: none;
+            box-shadow: none;
+            padding: 0px 0px;
+        }
+        .trashcan {
+            padding: 0 6px;
+        }
+        .separator {
+            background-color: rgba(#000, 0.33);
+            margin: 12px 4px;
+            padding: 0 0 0 1px;
+        }
+        .taskbar {
+            padding: 4px 6px 4px 6px;
+            .app {
+                padding: 4px 4px;
+            }
+        }
+        .minimized_previews {
+            padding: 4px 6px 4px 6px;
+            margin-left: 8px;
+        }
+    }
+}
+.dock_open_area, .dock_close_area {
+    background-color: transparent;
+}

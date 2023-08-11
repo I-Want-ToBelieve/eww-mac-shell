@@ -1,0 +1,13 @@
+[package]
+name = "hyprland-tasks"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+freedesktop-desktop-entry = "0.5.0"
+freedesktop-icons = "0.2.3"
+hyprland = "0.3.8"
+serde = "1.0.180"
+serde_json = "1.0.104"

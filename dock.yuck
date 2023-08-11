@@ -1,0 +1,97 @@
+(defwindow dock_open_area
+    :monitor 0
+    :geometry (geometry :x "0px"
+                        :y "-2px"
+                        :height "20px"
+                        :anchor "bottom center"
+                    )
+        (eventbox
+            :onhover "eww update dock_pseudo_hovered='true'"
+            :onhoverlost "eww update dock_pseudo_hovered='false'"
+            :width { arraylength(taskbar_entries) * 64 + 196 }
+            :height 8
+            :halign "center"
+        )
+)
+
+(defwindow dock
+    :windowtype "dock"
+    :monitor 0
+    :geometry (geometry :x "0px"
+                        :y "0px"
+                        :anchor "bottom center"
+                    )
+    (revealer :reveal "${dock_pseudo_hovered || dock_hovered}" :transition "slideup" :duration "220ms"
+        (eventbox
+            :onhover "eww update dock_hovered='true' && eww update dock_pseudo_hovered='false'"
+            :onhoverlost "eww update dock_hovered='false' && eww update dock_pseudo_hovered='false'"
+            (box
+                :class "main"
+                :space-evenly false
+                (taskbar)
+                (box :class "separator")
+                (minimized_previews)
+                (button
+                    :class "entry trashcan"
+                    :onclick "nautilus trash:///"
+                    (image 
+                        :class "icon"
+                        :path "/usr/share/icons/WhiteSur/places/scalable/trash-empty.svg"
+                        :image-height 64
+                    )
+                )
+            )
+        )
+    )
+)
+
+(defwidget taskbar[]
+    (box :class "taskbar" :space-evenly false
+        (button
+            :class "entry app"
+            (image 
+                :class "icon"
+                :path "/usr/share/icons/WhiteSur/apps@2x/scalable/view-app-grid.svg"
+                :image-height 64
+                :image-width 64
+            )
+        )
+        (for entry in taskbar_entries
+            (button
+                :class "entry app"
+                :tooltip { entry.title }
+                :onclick { arraylength(entry.tasks) == 1 ?
+                    "hyprctl dispatch focuswindow address:" + entry.tasks[0].address
+                    : "hyprctl dispatch focuswindow address:" + entry.tasks[0].address ; TODO Cycle
+                }
+                (image 
+                    :class "icon"
+                    :path {entry.icon}
+                    :image-height 64
+                    :image-width 64
+                )
+            )
+        )
+    )
+)
+
+(defwidget minimized_previews[]
+    (box
+        :class "minimized_previews"
+        :space-evenly false
+        :spacing 16
+        :visible "${arraylength(minimized_windows) > 0}"
+        (for window in minimized_windows
+            (button
+                :class "entry app"
+                :tooltip { window[0] }
+                :onclick "./scripts/bin/hyprland-minimize restore ${window[1]}"
+                (image 
+                    :class "icon"
+                    :path "/tmp/${window[1]}.png"
+                    :image-width 64
+                )
+            )
+        )
+    )
+)
