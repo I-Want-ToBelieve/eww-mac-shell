@@ -13,7 +13,7 @@
                 (box :class "control")
             )
             (box
-                :class "sliders control"
+                :class "slider control"
                 :orientation "vertical"
                 :space-evenly false
                 :spacing 8
@@ -21,7 +21,7 @@
                 (scale :class "scale" :value brightness :min 0 :max 852 :onchange "brightnessctl s {}")
             )
             (box
-                :class "sliders control"
+                :class "slider control"
                 :orientation "vertical"
                 :space-evenly false
                 :spacing 8

@@ -99,22 +99,36 @@ $color-accent: rgb(0, 122, 255);
             }
         }
     }
-    .sliders {
+    .slider {
         padding-top: 12px;
+        .edge {
+            min-width: $slider-height;
+            min-height: $slider-height;
+            background: $color-bg-slider;
+        }
         .scale {           
+            margin: 0;
+            padding: 1px;
+            background: $color-bg-slider;
+            min-height: $slider-height + 2px;
+            border-radius: $slider-height;
+            padding: 0;
             trough {
-                background: $color-bg-slider;
-                border: 1px solid $color-bg-slider;                                                                                              
+                background: none;
                 min-height: $slider-height;
                 border-radius: $slider-height;
-                margin: 0 -4px;
+                margin: 0 $slider-height / 2 - 1px;
             }
-            highlight {
-                border-radius: $slider-height;
+            highlight {                                
+                min-width: $slider-height;
+                min-height: $slider-height;
+                border-top-left-radius: $slider-height / 2;
+                border-bottom-left-radius: $slider-height / 2;
                 background: $color-bg-opaque;
+                margin: 0px -$slider-height / 2 + 2px;
             }
-            slider {                                                           
-                min-width: $slider-height;                                                                               
+            slider {
+                min-width: $slider-height;
                 min-height: $slider-height;
                 box-shadow: 0px 0px 1px 1px rgba(#000, .1), 0px 0px 4px 0px rgba(#000, .2);
             }
@@ -125,7 +139,7 @@ $color-accent: rgb(0, 122, 255);
         border-radius: $rounding + 8;
         box-shadow:
             0px 0px 16px 0px rgba(#000, .2),
-            0px 0px 2px 1px rgba(#000, .2);
+            0px 0px 1px 1px rgba(#000, .2);
         margin: 32px;
         padding: 16px;
     }
