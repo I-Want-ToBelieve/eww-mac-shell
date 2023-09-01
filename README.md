@@ -67,8 +67,8 @@ cp target/release/hyprland-minimize ../bin
 
 Copy everything into your eww config directory.
 ```sh
-cd ..
-cp * ~/.config/eww
+cd ../../
+cp * ~/.config/eww -r
 ```
 
 You're done! Yippee!!
